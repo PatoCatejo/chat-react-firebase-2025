@@ -1,25 +1,56 @@
-import { Button } from "@/components/ui/button";
-import { useAuthActions } from "../../hooks/use-auth-actions";
+import CardFooterAuth from "@/components/card-footer-auth";
+
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "sonner";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import { useAuthActions } from "@/hooks/use-auth-actions";
+import { loginZodSchema, type LoginZodSchemaType } from "@/lib/zod.schema";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
-  const { loginWithGoogle } = useAuthActions();
+  const { loading, login } = useAuthActions();
 
-  const handleLoginWithGoogle = async () => {
-    const result = await loginWithGoogle();
-    if (result.success) {
-      console.log("Login successful");
-    } else {
-      console.error("Login failed:", result.error);
-      toast.error("Login failed. Please try again.");
+  const form = useForm<LoginZodSchemaType>({
+    resolver: zodResolver(loginZodSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: LoginZodSchemaType) => {
+    const response = await login(data);
+    if (!response.success) {
+      if (response.error?.code === "auth/invalid-login-credentials") {
+        form.setError("email", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+
+        form.setError("password", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+      }
+      return;
     }
   };
 
@@ -31,12 +62,48 @@ const LoginPage = () => {
           Login to your account using email and password or with Google.
         </CardDescription>
       </CardHeader>
-      <CardContent>...</CardContent>
-      <CardFooter>
-        <Button onClick={handleLoginWithGoogle} className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Enter you email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="******" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooterAuth type="login" loading={loading} />
     </Card>
   );
 };
