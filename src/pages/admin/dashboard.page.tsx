@@ -11,6 +11,7 @@ const DashboardPage = () => {
       <h1>Dashboard Page</h1>
       <p>Welcome, {user!.displayName || "Guest"}!</p>
       <p>Email: {user!.email || "Not Provided"}</p>
+      <img src={user!.photoURL || "Guest"} alt="" />
       <Button variant={"destructive"} onClick={logout}>
         Sign Out
       </Button>

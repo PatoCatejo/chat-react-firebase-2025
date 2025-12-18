@@ -33,8 +33,8 @@ const RegisterPage = () => {
     defaultValues: {
       displayName: "",
       email: "",
-      // password: "",
-      // confirmPassword: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
