@@ -1,5 +1,5 @@
 import { useTaskActions } from "@/hooks/use-task-actions";
-import ItemTask from "../item-task";
+import ItemTask from "./item-task";
 
 const ListTask = () => {
   const { tasks } = useTaskActions();

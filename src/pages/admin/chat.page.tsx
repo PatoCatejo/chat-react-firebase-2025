@@ -1,4 +1,33 @@
+import ListRoomChat from "@/components/chat/list-room-chat";
+import MessagesChat from "@/components/chat/messages-chat";
+import { Suspense, useState } from "react";
+
 const ChatPage = () => {
-  return <div>Chat Page</div>;
+  const [roomId, setRoomId] = useState("");
+
+  const handleClickRoomId = (id: string) => {
+    setRoomId(id);
+  };
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2">
+      <section>
+        {/* Mostrar los rooms */}
+        <Suspense fallback={<div>Cargando rooms...</div>}>
+          <ListRoomChat handleClickRoomId={handleClickRoomId} />
+        </Suspense>
+      </section>
+      <section>
+        {/* Mostrar los mensajes */}
+        {roomId ? (
+          <Suspense fallback={<div>Cargando mensajes...</div>}>
+            <MessagesChat roomId={roomId} />
+          </Suspense>
+        ) : (
+          <div>Selecciona una sala para chatear</div>
+        )}
+      </section>
+    </div>
+  );
 };
 export default ChatPage;
