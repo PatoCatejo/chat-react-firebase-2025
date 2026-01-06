@@ -1,3 +1,4 @@
+import FormMessageChat from "@/components/chat/form-message-chat";
 import ListRoomChat from "@/components/chat/list-room-chat";
 import MessagesChat from "@/components/chat/messages-chat";
 import { Suspense, useState } from "react";
@@ -21,6 +22,7 @@ const ChatPage = () => {
         {/* Mostrar los mensajes */}
         {roomId ? (
           <Suspense fallback={<div>Cargando mensajes...</div>}>
+            <FormMessageChat roomId={roomId} />
             <MessagesChat roomId={roomId} />
           </Suspense>
         ) : (
