@@ -1,5 +1,5 @@
 import { useProfileActions } from "@/hooks/use-profile-actions";
-import { profileZodSchema, type profileZodSchemaType } from "@/lib/zod.schema";
+import { profileZodSchema, type profileZodSchemaType } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

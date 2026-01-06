@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { useAuthActions } from "@/hooks/use-auth-actions";
-import { loginZodSchema, type LoginZodSchemaType } from "@/lib/zod.schema";
+import { loginZodSchema, type LoginZodSchemaType } from "@/lib/zod.schemas";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

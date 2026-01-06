@@ -1,4 +1,4 @@
-import { taskZodSchema, type TaskZodSchemaType } from "@/lib/zod.schema";
+import { taskZodSchema, type TaskZodSchemaType } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

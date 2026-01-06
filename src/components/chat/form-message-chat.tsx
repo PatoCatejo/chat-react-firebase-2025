@@ -1,4 +1,4 @@
-import { messageZodSchema, type MessageZodSchemaType } from "@/lib/zod.schema";
+import { messageZodSchema, type MessageZodSchemaType } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

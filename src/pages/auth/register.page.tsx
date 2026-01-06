@@ -20,7 +20,7 @@ import { useAuthActions } from "@/hooks/use-auth-actions";
 import {
   registerZodSchema,
   type RegisterZodSchemaType,
-} from "@/lib/zod.schema";
+} from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
