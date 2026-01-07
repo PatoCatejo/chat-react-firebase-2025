@@ -4,6 +4,7 @@ import {
 } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,10 +38,9 @@ const FormSearchFriend = ({ handleClickRoomId }: Props) => {
     startTransition(async () => {
       const response = await findOrCreateRoom(values.email);
 
-      // console.log(response);
       if (response.success) {
         handleClickRoomId(response.roomId);
-        toast.success("Friend encontrado, comienza a chatear");
+        toast.success("¡Amigo encontrado! Comienza a chatear");
         form.reset();
         return;
       }
@@ -51,14 +51,22 @@ const FormSearchFriend = ({ handleClickRoomId }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="p-2 space-y-2 border-b border-slate-200"
+      >
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="email" placeholder="shadcn@mail.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="Buscar por email..."
+                  {...field}
+                  className="border-slate-300 focus-visible:ring-blue-500"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,11 +74,11 @@ const FormSearchFriend = ({ handleClickRoomId }: Props) => {
         />
         <Button
           type="submit"
-          variant={"outline"}
-          className="w-full"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
           disabled={isLoading}
         >
-          {isLoading ? "Buscando friend..." : "Buscar"}
+          <Search className="w-4 h-4" />
+          {isLoading ? "Buscando..." : "Buscar"}
         </Button>
       </form>
     </Form>

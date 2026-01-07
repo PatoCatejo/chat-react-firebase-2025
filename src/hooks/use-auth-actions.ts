@@ -89,7 +89,11 @@ export const useAuthActions = () => {
       const provider = new GoogleAuthProvider();
       const data = await signInWithPopup(auth, provider);
 
+      // Guardar el usuario en Firestore
       await createOrUpdateUser(data.user);
+
+      // Forzar la recarga del usuario para sincronizar con Reactfire
+      await data.user.reload();
 
       return {
         success: true,

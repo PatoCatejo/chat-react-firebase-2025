@@ -1,6 +1,7 @@
 import { messageZodSchema, type MessageZodSchemaType } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,21 +46,37 @@ const FormMessageChat = ({ roomId }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex gap-2 items-end"
+      >
         <FormField
           control={form.control}
           name="text"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-1">
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  placeholder="Escribe un mensaje..."
+                  {...field}
+                  className="rounded-full border-slate-300 focus-visible:ring-blue-500 bg-white"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "enviando mensaje" : "enviar"}
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="rounded-full px-4 bg-blue-500 hover:bg-blue-600 text-white"
+          size="icon"
+        >
+          {isLoading ? (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <Send className="w-4 h-4" />
+          )}
         </Button>
       </form>
     </Form>

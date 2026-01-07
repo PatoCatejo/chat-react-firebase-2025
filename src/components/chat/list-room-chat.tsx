@@ -9,7 +9,7 @@ const ListRoomChat = ({ handleClickRoomId }: Props) => {
   const { rooms } = UseRoomActions();
 
   return (
-    <div>
+    <div className="flex flex-col gap-1 p-2">
       {rooms.map((room) => (
         <RoomChat
           key={room.id}
@@ -17,7 +17,11 @@ const ListRoomChat = ({ handleClickRoomId }: Props) => {
           handleClickRoomId={handleClickRoomId}
         />
       ))}
-      {/* <pre>{JSON.stringify(rooms, null, 2)}</pre> */}
+      {rooms.length === 0 && (
+        <p className="text-center text-slate-400 text-sm py-4">
+          No hay chats disponibles
+        </p>
+      )}
     </div>
   );
 };

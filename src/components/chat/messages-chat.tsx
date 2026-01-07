@@ -8,11 +8,16 @@ const MessagesChat = ({ roomId }: Props) => {
   const { messages } = useMessagesActions(roomId);
 
   return (
-    <div className="space-y-2">
-      {messages.map((message) => (
-        <MessageChat key={message.id} message={message} />
-      ))}
-      {/* <pre>{JSON.stringify(messages, null, 2)}</pre> */}
+    <div className="flex flex-col gap-3">
+      {messages.length === 0 ? (
+        <div className="text-center text-slate-400 text-sm py-8">
+          <p>No hay mensajes aún. ¡Sé el primero!</p>
+        </div>
+      ) : (
+        messages.map((message) => (
+          <MessageChat key={message.id} message={message} />
+        ))
+      )}
     </div>
   );
 };
