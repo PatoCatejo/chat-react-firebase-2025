@@ -1,5 +1,5 @@
 import { useProfileActions } from "@/hooks/use-profile-actions";
-import { profileZodSchema, type profileZodSchemaType } from "@/lib/zod.schemas";
+import { profileZodSchema, type ProfileZodSchemaType } from "@/lib/zod.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Save, Image as ImageIcon } from "lucide-react";
@@ -26,7 +26,7 @@ interface Props {
 const FormProfile = ({ user }: Props) => {
   const { loading, updateUserProfile } = useProfileActions();
 
-  const form = useForm<profileZodSchemaType>({
+  const form = useForm<ProfileZodSchemaType>({
     resolver: zodResolver(profileZodSchema),
     defaultValues: {
       displayName: user?.displayName || "",
@@ -34,7 +34,7 @@ const FormProfile = ({ user }: Props) => {
     },
   });
 
-  async function onSubmit(values: profileZodSchemaType) {
+  async function onSubmit(values: ProfileZodSchemaType) {
     const result = await updateUserProfile(values);
     if (result.success) {
       return toast.success("Perfil actualizado correctamente");
